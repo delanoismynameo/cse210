@@ -4,19 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Set up instances and variables
-         PromptGenerator prompt1 = new PromptGenerator();
-        prompt1._prompts.Add("What was the best thing that happened to you today? ");
-        prompt1._prompts.Add("Who did you talk to today? What did you talk about? ");
-        prompt1._prompts.Add("What activities did you do today? ");
-        prompt1._prompts.Add("What was one nice thing someone did for you today? ");
-        prompt1._prompts.Add("Who do you feel wronged you today? ");
-        prompt1._prompts.Add("What was the worst part of your day today? ");
-        prompt1._prompts.Add("What do you want to do tomorrow? ");
-        prompt1._prompts.Add("What did you do right after you woke up this morning? ");
-
-        Entry entry1 = new Entry();
-        entry1._promptText = prompt1.GetRandomPrompt();
+        Journal journal = new Journal();
+        PromptGenerator promptGenerator = new PromptGenerator();
 
         int menuChoice = 0;
 
@@ -30,19 +19,27 @@ class Program
                 menuChoice = int.Parse(stringMenuChoice);
                 if (menuChoice == 1)
                 {
-                    
+                    string prompt = promptGenerator.GetRandomPrompt();
+                    Console.WriteLine(prompt);
+                    string response = Console.ReadLine();
+                    Entry newEntry = new Entry(prompt, response);
+                    journal.AddEntry(newEntry);
                 }
                 else if (menuChoice == 2)
                 {
-
+                    journal.DisplayAll();
                 }
                 else if (menuChoice == 3)
                 {
-
+                    Console.Write("Enter a filename to load the journal from: ");
+                    string loadFilename = Console.ReadLine();
+                    journal.LoadFromFile(loadFilename);
                 }
                 else if (menuChoice == 4)
                 {
-
+                    Console.Write("Enter a filename to save the journal: ");
+                    string saveFilename = Console.ReadLine();
+                    journal.SaveToFile(saveFilename);
                 }
                 else if (menuChoice == 5)
                 {
